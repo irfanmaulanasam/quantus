@@ -63,51 +63,46 @@ Elevator.prototype.decide = function() {
         person.get_floor();
         return this.commit_decision(person.get_destination_floor());
     }
-    let elevator_id = 1
-    let handled = false
-    console.log(requests)
     requests.sort((a,b)=>{
-        return a > b
+        return a < b
     })
-    console.log(requests)
-    for (let i = 0; i < requests.length; i++) {
-        console.log(i,'request>>',requests[i])
-        if (elevator_id < elevators.length) {
-            if (elevators[elevator_id].get_destination_floor()===requests[i]) {
-                handled = true
-                // break
-            } else{
-                elevator_id ++
+    let elevator_id = 0
+    let handled = false
+    for (let i = 1; i <= num_floors.length; i++) {
+        for (let j = 0; j < requests.length; j++) {
+            if (i === requests[j]) {
+                if (elevator_id < elevators.length) {
+                    if (elevators[elevator_id].get_destination_floor()===requests[i]) {
+                        handled = true
+                        // break
+                    } else{
+                        elevator_id ++
+                    }
+                }
+                if (!handled) {
+                    return this.commit_decision(requests[i])
+                }
             }
         }
-        if (!handled) {
-            console.log(i,'handling isterasi',elevator_id)
-           return this.commit_decision(requests[i])
-        }
+        
     }
-    // var handled = false;
-    // elevators.in_job = false
-    // for(var i = 0;i < requests.length;i++) {
-    //     if (!elevators.in_job) {
-    //         for(var j = 0;j < elevators.length;j++) {
-    //             elevators.in_job = true
-    //             console.log('id elevator',elevators[j].id,'>>>>posisi elevator', elevator.at_floor(),'tujuan >>>',elevators[j].get_destination_floor(),'jumlah orang',requests[i])
-    //             if(elevators[j].get_destination_floor() == requests[i]) {
-    //                 handled = true;
-    //                 elevators.in_job = false 
-    //                 break;
-    //             }
-    //             if (handled) {
-    //                 break;
-    //             }
-    //         }
-    //         if(!handled) {
-    //             this.commit_decision(requests[i]);
-    //             break
+    // console.log(requests)
+    // requests.sort((a,b)=>{
+    //     return a > b
+    // })
+    // console.log(requests)
+    // for (let i = 0; i < requests.length; i++) {
+    //     if (elevator_id < elevators.length) {
+    //         if (elevators[elevator_id].get_destination_floor()===requests[i]) {
+    //             handled = true
+    //             // break
+    //         } else{
+    //             elevator_id ++
     //         }
     //     }
+    //     if (!handled) {
+    //        return this.commit_decision(requests[i])
+    //     }
     // }
-
-    // // return this.commit_decision(1);
     return this.commit_decision(Math.floor(num_floors / 2));
 };
