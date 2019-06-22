@@ -1,0 +1,3 @@
+DBNAME=from-nasa-with-love
+SECRET=secret
+APODKEY=wR4kh7kRN5qfdSGCCSGMTcpu4gsCj4Q0gNXWiA9a
